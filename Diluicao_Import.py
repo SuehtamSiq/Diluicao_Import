@@ -16,6 +16,14 @@ import shutil
 user = os.getlogin()
 
 def Import_Diluição():
+    #Definindo a Data de hoje
+    data = datetime.date.today()
+
+    ano = data.year
+    mes = data.month
+    dia = data.day
+
+    dia_novo = dia - 1
 
     # Browser
     navegador = webdriver.Chrome(service=ChromeService('chromedriver.exe'))
@@ -42,14 +50,19 @@ def Import_Diluição():
             break
 
     # Campo DATA INICIAL - Preenchendo Campos 
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('08/09/2023')
-       
-    # Campo DATA FINAL
-    navegador.find_element('xpath', '//*[@id="CrystalReportViewer1_p1DiscreteValue"]').click()
-
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(mes)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(dia_novo)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(ano)
+    
     # Campo DATA FINAL - Preenchendo Campos
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('08/09/2023')
-  
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(mes)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(dia)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(ano)
+
     # Botão 'OK'
     navegador.find_element('xpath', '//*[@id="CrystalReportViewer1_submitButton"]').click()
     sleep(3)
@@ -79,19 +92,19 @@ def Import_Diluição():
     sleep(5)
 
     #Trocando o nome do arquivo
-    nome_atual = os.path.join(r"C:\Users\{}\Downloads".format(user), "CrystalReportViewer1.xlsx")
-    nome_novo = os.path.join(r"C:\Users\{}\Downloads".format(user), "Diluição - 09.08.23.xlsx")
+    nome_atual = os.path.join(r'C:\Users\{}\Downloads'.format(user), 'CrystalReportViewer1.xlsx')
+    nome_novo = os.path.join(r'C:\Users\{}\Downloads'.format(user), 'Diluição - {}.{}.{}.xlsx'.format(dia, mes, ano))
 
     nome_consolidado = shutil.move(nome_atual, nome_novo)
 
-    print("Arquivo alterado para: ",nome_consolidado)
+    print('Arquivo alterado para: ',nome_consolidado)
 
     navegador.quit()
 
 
 def Tratamento_Dados():
 
-    plan = pd.read_excel(r'C:\Users\{}\Downloads\Diluição - 09.08.23.xlsx'.format(user))
+    plan = pd.read_excel(r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano))
 
     # Filtar linhas onde 'Lote Produto' não contém 'PR'
     plan = plan[plan['Lote Produto'].str.contains('PR', na=False) 
@@ -100,11 +113,14 @@ def Tratamento_Dados():
     # Resetar índices após a filtragem
     plan.reset_index(drop=True, inplace=True)
 
-    plan.to_excel(r'C:\Users\{}\Downloads\Diluição - 09.08.23.xlsx'.format(user), index=False)
+    plan.to_excel(r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano), index=False)
     
-    caminho_arquivo = r'C:\Users\{}\Downloads\Diluição - 09.08.23.xlsx'.format(user)
+    caminho_arquivo = r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano)
     
     os.startfile(caminho_arquivo)
     
 Import_Diluição() 
 Tratamento_Dados()
+
+
+# By Matheus Siqueira
