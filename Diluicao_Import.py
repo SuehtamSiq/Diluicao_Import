@@ -4,27 +4,31 @@ from selenium import webdriver
 import os
 from pathlib import Path
 import shutil
+import datetime
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 # Definindo usuário
 user = os.getlogin()
 
+# Definindo a Data de produção
+data = datetime.date.today()
+
+indice_da_semana = data.weekday()
+
+ano = data.year
+mes = data.month
+dia = data.day
+
+if indice_da_semana == 0:
+    dia_novo = dia - 3
+else:
+    dia_novo = dia - 1
+
 def Import_Diluição():
     
-    # Definindo a Data de produção
-    data = datetime.date.today()
-    
-    indice_da_semana = data.weekday()
-
-    ano = data.year
-    mes = data.month
-    dia = data.day
-
-    if indice_da_semana == 0:
-        dia_novo = dia - 3
-    else:
-        dia_novo = dia - 1
-
     # Browser
     navegador = webdriver.Chrome()
 
