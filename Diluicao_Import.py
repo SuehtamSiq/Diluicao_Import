@@ -8,6 +8,9 @@ import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import openpyxl
+import warnings
+
 
 
 # Definindo usuário
@@ -116,8 +119,10 @@ def Import_Diluição():
 
 
 def Tratamento_Dados():
-
-    plan = pd.read_excel(r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano))
+    
+    with warnings.catch_warnings(record=True):
+        warnings.simplefilter('always')
+        plan = pd.read_excel(r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano), engine='openpyxl')
 
     # Filtar linhas onde 'Lote Produto' não contém 'PR'
     plan = plan[plan['Lote Produto'].str.contains('PR', na=False) 
@@ -126,7 +131,7 @@ def Tratamento_Dados():
     # Resetar índices após a filtragem
     plan.reset_index(drop=True, inplace=True)
 
-    plan.to_excel(r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano), index=False)
+    plan.to_excel(r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano), engine='openpyxl', index=False)
     
     caminho_arquivo = r'C:\Users\{}\Downloads\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano)
     
