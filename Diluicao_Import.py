@@ -151,7 +151,7 @@ def Import_Diluição():
         pasta_mes = r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\{} - {}'.format(user, mes, nom_mes)
         os.makedirs(pasta_mes, exist_ok=True)
         
-        plan_mes_path = os.path.join(pasta_mes, '{} - Diluicao - {}.xlsx'.format(mes, nom_mes))
+        plan_mes_path = os.path.join(pasta_mes, '{} - Diluicao_Mensal - {}.xlsx'.format(mes, nom_mes))
                                      
         if os.path.exists(plan_mes_path):
             plan_mes = pd.read_excel(plan_mes_path, engine='openpyxl')
