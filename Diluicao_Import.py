@@ -40,7 +40,7 @@ def Tratamento_Dados():
     
     with warnings.catch_warnings(record=True):
         warnings.simplefilter('always')
-        plan = pd.read_excel(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano), engine='openpyxl')
+        plan = pd.read_excel(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\{} - {}\Diluição - {}.{}.{}.xlsx'.format(user, mes, nom_mes, dia, mes, ano), engine='openpyxl')
 
     # Filtar linhas onde 'Lote Produto' não contém 'PR'
     plan = plan[plan['Lote Produto'].str.contains('PR', na=False) 
@@ -49,9 +49,9 @@ def Tratamento_Dados():
     # Resetar índices após a filtragem
     plan.reset_index(drop=True, inplace=True)
 
-    plan.to_excel(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano), engine='openpyxl', index=False)
+    plan.to_excel(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\{} - {}\Diluição - {}.{}.{}.xlsx'.format(user, mes, nom_mes, dia, mes, ano), engine='openpyxl', index=False)
     
-    caminho_arquivo = r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\Diluição - {}.{}.{}.xlsx'.format(user, dia, mes, ano)
+    caminho_arquivo = r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\{} - {}\Diluição - {}.{}.{}.xlsx'.format(user, mes, nom_mes, dia, mes, ano)
     
     os.startfile(caminho_arquivo)
     
@@ -59,7 +59,7 @@ def Tratamento_Dados():
 def Import_Diluição():
     
     # Verificar se o arquivo já existe
-    nome_novo = os.path.join(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao'.format(user), 'Diluição - {}.{}.{}.xlsx'.format(dia, mes, ano))
+    nome_novo = os.path.join(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\{} - {}'.format(user, mes, nom_mes), 'Diluição - {}.{}.{}.xlsx'.format(dia, mes, ano))
     
     if os.path.exists(nome_novo):
         
@@ -148,7 +148,7 @@ def Import_Diluição():
         os.rename(nome_atual, nom_nov)
         
         # Carregar planilha mestre do mês ou criar se não existir
-        pasta_mes = r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao'.format(user)
+        pasta_mes = r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\{} - {}'.format(user, mes, nom_mes)
         os.makedirs(pasta_mes, exist_ok=True)
         
         plan_mes_path = os.path.join(pasta_mes, '{} - Diluicao - {}.xlsx'.format(mes, nom_mes))
@@ -160,7 +160,7 @@ def Import_Diluição():
             
         
         # Movendo o arquivo  
-        destino = os.path.join(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao'.format(user))
+        destino = os.path.join(r'C:\Users\{}\OneDrive - Baxter\MFG\Carga Soluções\02 - IV\Diluicao\{} - {}'.format(user, mes, nom_mes))
         shutil.move(nom_nov, destino)
         
         
