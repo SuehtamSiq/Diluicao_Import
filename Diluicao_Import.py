@@ -35,8 +35,19 @@ dia = data.day
 dia_novo = data_nova.day
 
 # Configurando o WebDriver do Chrome
+
 service = Service(ChromeDriverManager().install())
 navegador = webdriver.Chrome(service=service)
+
+download_path = rf"C:\Users\{user}\Downloads"
+
+navegador.execute_cdp_cmd(
+    "Page.setDownloadBehavior",
+    {
+        "behavior": "allow",
+        "downloadPath": download_path
+    }
+)
       
 def Import_Diluição_Crystal():
 
