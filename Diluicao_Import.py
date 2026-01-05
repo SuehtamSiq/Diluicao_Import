@@ -182,6 +182,36 @@ def Import_Diluição_POMSNET():
 
     # Seleciona o formato Excel
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[10]/div/div[2]/div[1]/ul[1]/li[11]/div/div/div/ul/li[4]/a'))).click()
+    time.sleep(5)
+
+    download_path2 = rf"C:\Users\{user}\Downloads"
+    padrao_nome = "RelatóriodeAdiçãodeMatériaPrima.xlsx"
+
+    arquivos = [
+        os.path.join(download_path2, f)
+        for f in os.listdir(download_path2)
+        if f.startswith("RelatóriodeAdiçãodeMatériaPrima") and f.endswith(".xlsx")
+    ]
+
+    if not arquivos:
+        raise Exception("Arquivo de relatório POMSNet não encontrado na pasta de downloads.")
+    
+    arquivo_mais_recente = max(arquivos, key=os.path.getctime)
+
+    novo_nome2 = os.path.join(download_path2, "Report Diluição POMSNET.xlsx")
+
+    if os.path.exists(novo_nome2):
+        os.remove(novo_nome2)
+
+    os.rename(arquivo_mais_recente, novo_nome2)
+
+    destino_pasta2 = r"C:\Users\{}\OneDrive - Baxter\Apontamento\Fechamentos\2026\Carga Soluções\01 - CAPD\Report POMS - Diluição".format(user)
+    destino_final2 = os.path.join(destino_pasta2, "Report Diluição POMSNET.xlsx")
+
+    if os.path.exists(destino_final2):
+        os.remove(destino_final2)
+
+    os.rename(novo_nome2, destino_final2)
 
 Import_Diluição_Crystal()
 Import_Diluição_POMSNET()
