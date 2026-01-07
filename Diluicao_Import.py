@@ -24,10 +24,10 @@ user = os.getlogin()
 data = date.today()
 indice_da_semana = data.weekday()
 
-if indice_da_semana == 0:
-    data_nova = data - timedelta(days=3)
-else:
-    data_nova = data - timedelta(days=1)
+
+data_nova = data - timedelta(days=15)
+
+print(data_nova)
 
 ano = data_nova.year
 mes = data_nova.month
