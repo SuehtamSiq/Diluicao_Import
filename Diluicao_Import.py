@@ -24,14 +24,14 @@ user = os.getlogin()
 data = date.today()
 indice_da_semana = data.weekday()
 
-
 data_nova = data - timedelta(days=15)
 
-print(data_nova)
-
-ano = data_nova.year
-mes = data_nova.month
 dia = data.day
+mes = data.month
+ano = data.year
+
+ano_novo = data_nova.year
+mes_novo = data_nova.month
 dia_novo = data_nova.day
 
 # Configurando o WebDriver do Chrome
@@ -73,18 +73,20 @@ def Import_Diluição_Crystal():
             break
 
     # Campo DATA INICIAL - Preenchendo Campos 
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(mes)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(mes_novo)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(dia)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(dia_novo)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(ano)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[1]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(ano_novo)
+    
 
     # Campo DATA FINAL - Preenchendo Campos
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(mes)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(dia_novo)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(dia)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys('/')
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/div/form/div/div/fieldset[2]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr[2]/td[1]/input'))).send_keys(ano)
+
 
     # Botão 'OK'
     navegador.find_element('xpath', '//*[@id="CrystalReportViewer1_submitButton"]').click()
@@ -136,36 +138,36 @@ def Import_Diluição_POMSNET():
     wait = WebDriverWait(navegador, 20)
 
     # Login POMSNET
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[3]/div/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/input'))).send_keys("SOARESM4")
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[3]/div/div[2]/div[3]/div/div[2]/div[2]/div/div[2]/input'))).send_keys("Mss1003*BfG!zXw")
+    wait.until(EC.element_to_be_clickable((By.ID, 'txtUsername'))).send_keys("SOARESM4")
+    wait.until(EC.element_to_be_clickable((By.ID, 'txtPassword'))).send_keys("Mss1003#BfG!zXw")
     navegador.switch_to.active_element.send_keys(Keys.ENTER)
 
     # Menu Hamburguer
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div[1]/div/ul/li/a'))).click()
+    wait.until(EC.element_to_be_clickable((By.ID, 'naveMegaMenuUl'))).click()
 
     # Relatórios
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div[1]/div/div[4]/div/ul[108]/li[3]/div/a/img'))).click()
+    wait.until(EC.element_to_be_clickable((By.ID, '3100'))).click()
 
     # Diluição
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div[1]/div/div[4]/div/ul[98]/li[11]/div/a/img'))).click()
+    wait.until(EC.element_to_be_clickable((By.ID, '9027'))).click()
 
     # Custos
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div[1]/div/div[4]/div/ul[90]/li[2]/div/a/img'))).click()
+    wait.until(EC.element_to_be_clickable((By.ID, '9029'))).click()
 
     # Adição de Matéria Prima
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div[1]/div/div[4]/div/ul[77]/li[2]/div/a/img'))).click()
+    wait.until(EC.element_to_be_clickable((By.ID, 'A9030'))).click()
 
     # Campo DATA INICIAL - Preenchendo Campos 
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys(dia)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys(dia_novo)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys('/')
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys(mes)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys(mes_novo)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys('/')
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys(ano)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys(ano_novo)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys(" ")
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[1]/div/div/span/input'))).send_keys("00:00:00")
 
     # Campo DATA FINAL - Preenchendo Campos
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[2]/div/div/span/input'))).send_keys(dia_novo)
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[2]/div/div/span/input'))).send_keys(dia)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[2]/div/div/span/input'))).send_keys('/')
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[2]/div/div/span/input'))).send_keys(mes)
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[2]/div/div/span/input'))).send_keys('/')
@@ -174,7 +176,7 @@ def Import_Diluição_POMSNET():
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[2]/div[2]/div/div/span/input'))).send_keys("00:00:00")
 
     # Botão 'OK'
-    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[11]/div/div/div[2]/div[1]/div[2]/button[1]'))).click()
+    wait.until(EC.element_to_be_clickable((By.ID, 'btnView'))).click()
     time.sleep(5)
 
     # Botão de exportar
@@ -213,6 +215,9 @@ def Import_Diluição_POMSNET():
 
     os.rename(novo_nome2, destino_final2)
 
+    navegador.quit()
+
 Import_Diluição_Crystal()
 Import_Diluição_POMSNET()
+
 # By Matheus Siqueira
