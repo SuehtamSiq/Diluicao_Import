@@ -104,7 +104,7 @@ def Import_Diluição_Crystal():
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/table[4]/tbody/tr/td/table/tbody/tr[5]/td[2]/span'))).click()
     time.sleep(1)
 
-    # Antes do download, verifica se ja existe um arquivo com o memso nome, e caso já exista, exclui o antigo.
+    # Antes do download, verifica se ja existe um arquivo com o mesmo nome, e caso já exista, exclui o antigo.
     nome_arq = Path(r'C:\Users\{}\Downloads\CrystalReportViewer1.xlsx'.format(user))
 
     if os.path.exists(nome_arq):
@@ -180,6 +180,7 @@ def Import_Diluição_POMSNET():
     time.sleep(5)
 
     # Botão de exportar
+    time.sleep(3.5)  
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[10]/div/div[2]/div[1]/ul[1]/li[11]/a'))).click()
 
     # Seleciona o formato Excel
