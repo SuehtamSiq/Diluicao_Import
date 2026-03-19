@@ -216,6 +216,83 @@ def Import_Diluição_POMSNET():
 
     os.rename(novo_nome2, destino_final2)
 
+    
+    # Extraindo o relatório de pesagem de lote
+
+    # Menu Hamburguer
+    wait.until(EC.element_to_be_clickable((By.ID, 'naveMegaMenuUl'))).click()
+
+    # Relatórios
+    wait.until(EC.element_to_be_clickable((By.ID, '3100'))).click()
+
+    # Diluição
+    wait.until(EC.element_to_be_clickable((By.ID, '9027'))).click()
+
+    # Pesagem
+    wait.until(EC.element_to_be_clickable((By.ID, 'A9031'))).click()
+
+    # Pesagem de Lote
+    wait.until(EC.element_to_be_clickable((By.ID, 'A9032'))).click()
+
+    # Campo DATA INICIAL - Preenchendo Campos 
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataInicial'))).send_keys(dia_novo)
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataInicial'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataInicial'))).send_keys(mes_novo)
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataInicial'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataInicial'))).send_keys(ano_novo)
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataInicial'))).send_keys(" ")
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataInicial'))).send_keys("00:00:00")
+
+    # Campo DATA FINAL - Preenchendo Campos
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataFinal'))).send_keys(dia)
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataFinal'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataFinal'))).send_keys(mes)
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataFinal'))).send_keys('/')
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataFinal'))).send_keys(ano)
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataFinal'))).send_keys(" ")
+    wait.until(EC.element_to_be_clickable((By.ID, 'pDataFinal'))).send_keys("00:00:00")
+
+     # Botão 'OK'
+    wait.until(EC.element_to_be_clickable((By.ID, 'btnView'))).click()
+    time.sleep(5)
+
+    # Botão de exportar
+    time.sleep(3.5)  
+    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="trv-main-menu-export-command"]/a/i'))).click()
+
+    # Seleciona o formato Excel
+    wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/form/div[10]/div/div[2]/div[1]/ul[1]/li[11]/div/div/div/ul/li[4]/a'))).click()
+    time.sleep(5)
+
+    download_path3 = rf"C:\Users\{user}\Downloads"
+    padrao_nome = "RelatóriodeAdiçãodeMatériaPrima.xlsx"
+
+    arquivos2 = [
+        os.path.join(download_path3, f)
+        for f in os.listdir(download_path3)
+        if f.startswith("MateriaisPesadosporLote") and f.endswith(".xlsx")
+    ]
+
+    if not arquivos2:
+        raise Exception("Arquivo de relatório POMSNet não encontrado na pasta de downloads.")
+
+    arquivo_mais_recente = max(arquivos2, key=os.path.getctime)
+
+    novo_nome3 = os.path.join(download_path3, "Report Pesagem POMSNET.xlsx")
+
+    if os.path.exists(novo_nome3):
+        os.remove(novo_nome3)
+
+    os.rename(arquivo_mais_recente, novo_nome3)
+
+    destino_pasta3 = r"C:\Users\{}\OneDrive - Baxter\Apontamento\Fechamentos\2026\Carga Soluções\01 - CAPD\Report POMS - Diluição".format(user)
+    destino_final3 = os.path.join(destino_pasta3, "Report Pesagem POMSNET.xlsx")
+
+    if os.path.exists(destino_final3):
+        os.remove(destino_final3)
+
+    os.rename(novo_nome3, destino_final3)
+
     navegador.quit()
 
 Import_Diluição_Crystal()
